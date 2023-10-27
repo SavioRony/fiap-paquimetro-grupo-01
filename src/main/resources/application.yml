@@ -1,0 +1,36 @@
+spring:
+  main:
+    banner-mode: "console"
+  application:
+    name: fiap-paquimetro-grupo-01
+
+    # H2 Database
+  datasource:
+    platform: h2
+    url: ${DATABASE_URL:jdbc:h2:file:./db/main/tech-challenge-grupo-01}
+    driverClassName: org.h2.Driver
+  jpa:
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        default_schema: public
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 8080
+  servlet:
+    context-path: /fiap-paquimetro-grupo-01
+
+arsenal:
+  library:
+    core:
+      api:
+        enable-docs: true
+        docs-base-package: br.com.fiap.controller
