@@ -1,8 +1,8 @@
 package br.com.fiap.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 
 @Getter
 @Setter
@@ -14,13 +14,13 @@ import javax.persistence.*;
 public class CondutorModel {
 
 	@Id
-    private Long documento;
+    private String documento;
 	private String nome;
 	private String telefone;
 	private String email;
 	// private  veiculos;
 	private String tipoDePagamento;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
 	private EnderecoModel endereco;
 }
