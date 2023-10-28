@@ -14,7 +14,7 @@ public class VeiculoModel {
     @NotNull(message = "é necessario passar o numero da placa")
     private String placa;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_condutor")
+    @JoinColumn(name = "id_condutor", nullable = false)
     private CondutorModel condutor;
     private String modelo;
     private String cor;

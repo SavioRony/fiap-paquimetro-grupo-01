@@ -8,10 +8,10 @@ import javax.validation.constraints.NotNull;
 public class VeiuculoRequestDTO {
 
 
-    @NotNull(message = "é necessario o documento do condutor")
-    private Long documentoCondutor;
     @NotNull(message = "é necessario passar o numero da placa")
     private String placa;
+    @NotNull(message = "condutor não pode ser nulo")
+    private CondutorRequestDTO condutor;
     private String modelo;
     private String cor;
 }
