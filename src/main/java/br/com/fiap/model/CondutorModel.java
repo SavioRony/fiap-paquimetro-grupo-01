@@ -28,7 +28,6 @@ public class CondutorModel {
 	private String nome;
 	private String telefone;
 	private String email;
-	// private  veiculos;
 	private String tipoDePagamento;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")

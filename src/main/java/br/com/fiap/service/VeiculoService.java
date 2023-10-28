@@ -1,6 +1,7 @@
 package br.com.fiap.service;
 
 import br.com.fiap.dto.VeiculoDTO;
+import br.com.fiap.dto.VeiuculoRequestDTO;
 import br.com.fiap.mapper.VeiculoMapper;
 import br.com.fiap.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ public class VeiculoService {
     @Autowired
     protected VeiculoMapper mapper;
 
-    public VeiculoDTO create(VeiculoDTO dto){
+    public VeiculoDTO create(VeiuculoRequestDTO dto){
         return mapper.toDTO(repository.save(mapper.toModel(dto)));
     }
 
-    public VeiculoDTO update(VeiculoDTO dto, String placa){
+    public VeiculoDTO update(VeiuculoRequestDTO dto, String placa){
         var model = repository.findById(placa);
         return model.isPresent() ? mapper.toDTO(repository.save(mapper.toModel(dto))) : null;
     }

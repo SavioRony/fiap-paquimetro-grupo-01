@@ -2,6 +2,7 @@ package br.com.fiap.controller;
 
 import br.com.fiap.dto.CondutorResponseDTO;
 import br.com.fiap.dto.VeiculoDTO;
+import br.com.fiap.dto.VeiuculoRequestDTO;
 import br.com.fiap.model.CondutorModel;
 import br.com.fiap.model.VeiculoModel;
 import br.com.fiap.service.VeiculoService;
@@ -35,7 +36,7 @@ public class VeiculoController {
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content)
             })
-    public ResponseEntity<VeiculoDTO> create(@RequestBody @Valid VeiculoDTO dto){
+    public ResponseEntity<VeiculoDTO> create(@RequestBody @Valid VeiuculoRequestDTO dto){
         return ResponseEntity.ok(service.create(dto));
     }
 
@@ -48,7 +49,7 @@ public class VeiculoController {
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content)
             })
-    public ResponseEntity<VeiculoDTO> update(@PathVariable(name = "placa") String placa, @RequestBody @Valid VeiculoDTO dto){
+    public ResponseEntity<VeiculoDTO> update(@PathVariable(name = "placa") String placa, @RequestBody @Valid VeiuculoRequestDTO dto){
 
         var response = service.update(dto, placa);
         return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
