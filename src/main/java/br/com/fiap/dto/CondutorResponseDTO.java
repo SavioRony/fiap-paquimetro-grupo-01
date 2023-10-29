@@ -1,5 +1,6 @@
 package br.com.fiap.dto;
 
+import br.com.fiap.enums.TipoPagamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,6 @@ public class CondutorResponseDTO {
     private String nome;
     private String telefone;
     private String email;
-    private String tipoDePagamento;
+    private TipoPagamento tipoDePagamento;
     private EnderecoResponseDTO endereco;
 }

@@ -1,9 +1,9 @@
 package br.com.fiap.handler;
 
 
-
 import br.com.fiap.exception.BadRequestException;
 import br.com.fiap.exception.BadRequestExceptionDetails;
+import br.com.fiap.exception.NotFoundException;
 import br.com.fiap.exception.ValidationExceptionDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +35,22 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<BadRequestExceptionDetails> handlerBadRequestException(BadRequestException bre){
+    public ResponseEntity<BadRequestExceptionDetails> handlerBadRequestException(BadRequestException bre) {
         return new ResponseEntity<>(BadRequestExceptionDetails.builder()
+                .title("Bad Request")
                 .status(HttpStatus.BAD_REQUEST.value())
-                .title("Bad Request Exception, check the Documentation")
                 .details(bre.getMessage())
                 .build(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<BadRequestExceptionDetails> handlerNotFoundRequestException(NotFoundException bre) {
+        return new ResponseEntity<>(BadRequestExceptionDetails.builder()
+                .title("Not Found")
+                .status(HttpStatus.NOT_FOUND.value())
+                .details(bre.getMessage())
+                .build(), HttpStatus.NOT_FOUND);
+    }
 
 
 }

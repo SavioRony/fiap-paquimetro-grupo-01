@@ -2,6 +2,7 @@ package br.com.fiap.service;
 
 import br.com.fiap.dto.VeiculoDTO;
 import br.com.fiap.dto.VeiuculoRequestDTO;
+import br.com.fiap.exception.NotFoundException;
 import br.com.fiap.mapper.VeiculoMapper;
 import br.com.fiap.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class VeiculoService {
 
     public VeiculoDTO getById(String placa){
         var model = repository.findById(placa);
-        return model.map(veiculoModel -> mapper.toDTO(veiculoModel)).orElse(null);
+        return model.map(veiculoModel -> mapper.toDTO(veiculoModel)).orElseThrow(() -> new NotFoundException("Veiculo não cadastrado no sistema!"));
     }
 
     public List<VeiculoDTO> getAllVeiculos(){

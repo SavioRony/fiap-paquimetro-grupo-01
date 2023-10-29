@@ -66,7 +66,7 @@ public class VeiculoController {
             })
     public ResponseEntity<VeiculoDTO> getVeiculo(@PathVariable(name = "placa") String placa) {
         var response = service.getById(placa);
-        return response != null ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping()
