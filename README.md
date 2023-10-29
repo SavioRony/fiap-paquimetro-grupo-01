@@ -225,7 +225,7 @@ O objetivo principal é refazer uma solução de parquímetros, que atualmente a
 
 **Requisição**
 
-**`PUT /veiculo/{placa}`**
+**`PUT /veiculo`**
 
 **Parâmetros da requisição**
 
@@ -311,7 +311,170 @@ O objetivo principal é refazer uma solução de parquímetros, que atualmente a
 | 200    | OK          |
 | 404    | Not Found   |
 
+### **Resgistro de estacionamento**
 
+**Requisição**
+
+**`POST /estacionamento/registro`**
+
+**Parâmetros da requisição**
+
+| Parâmetro       | Tipo    |
+|-----------------|---------|
+| quantidadeHoras | Number  |
+| tipo            | String  |
+| valorHora       | Number  |
+| condutor        | Object  |
+| - documento     | String  |
+| veiculo         | Object  |
+| - placa         | String  |
+
+
+**Request**
+
+```
+{
+  "quantidadeHoras": 0,
+  "tipo": "FIXO",
+  "valorHora": 0,
+  "condutor": {
+    "documento": "string"
+  },
+  "veiculo": {
+    "placa": "string"
+  }
+}
+```
+**Códigos de resposta**
+
+| Código | Descrição   |
+|--------|-------------|
+| 200    | OK          |
+| 400    | Bad Request |
+| 404    | Not Found   |
+
+### **Fechamento de estacionamento**
+
+**Requisição**
+
+**`POST /estacionamento/fechamento`**
+
+**Parâmetros da requisição**
+
+| Parâmetro     | Tipo    |
+|---------------|---------|
+| placa         | String  |
+
+
+**Request**
+
+```
+{
+  "placa": "string"
+}
+```
+
+**Response**
+
+```
+{
+  "placa": "string",
+  "valorTotal": 0,
+  "tipoPagamento": "DEBITO",
+  "quantidadeHoras": 0,
+  "dataHoraInicio": "string",
+  "dataHoraFim": "string"
+}
+```
+**Códigos de resposta**
+
+| Código | Descrição   |
+|--------|-------------|
+| 200    | OK          |
+| 400    | Bad Request |
+| 404    | Not Found   |
+
+### **Buscar estacionamento aberto por veiculo**
+
+**Requisição**
+
+**`GET /estacionamento/{placa}`**
+
+**Parâmetros da requisição**
+
+| Parâmetro     | Tipo    |
+|---------------|---------|
+| placa         | String  |
+
+
+**Response**
+
+```
+{
+  "id": 0,
+  "dataHoraInicio": "2023-10-29T18:34:54.137Z",
+  "dataHoraFim": "2023-10-29T18:34:54.137Z",
+  "quantidadeHoras": 0,
+  "tipo": "FIXO",
+  "valorHora": 0,
+  "condutor": {
+    "documento": "string"
+  },
+  "veiculo": {
+    "placa": "string"
+  }
+}
+```
+
+**Códigos de resposta**
+
+| Código | Descrição   |
+|--------|-------------|
+| 200    | OK          |
+| 400    | Bad Request |
+| 404    | Not Found   |
+
+### **Buscar estacionamentos por condutor**
+
+**Requisição**
+
+**`GET /estacionamento/condutor/{documento}`**
+
+**Parâmetros da requisição**
+
+| Parâmetro | Tipo    |
+|-----------|---------|
+| documento | String  |
+
+
+**Response**
+
+```
+[
+  {
+    "id": 0,
+    "dataHoraInicio": "2023-10-29T18:38:54.214Z",
+    "dataHoraFim": "2023-10-29T18:38:54.214Z",
+    "quantidadeHoras": 0,
+    "tipo": "FIXO",
+    "valorHora": 0,
+    "condutor": {
+      "documento": "string"
+    },
+    "veiculo": {
+      "placa": "string"
+    }
+  }
+]
+```
+
+**Códigos de resposta**
+
+| Código | Descrição   |
+|--------|-------------|
+| 200    | OK          |
+| 400    | Bad Request |
+| 404    | Not Found   |
 
 # 📗 Acessando o Swagger da Aplicação
 A documentação da API da nossa aplicação está disponível através do Swagger,
