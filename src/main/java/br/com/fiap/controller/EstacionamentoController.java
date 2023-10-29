@@ -2,13 +2,8 @@ package br.com.fiap.controller;
 
 import br.com.fiap.dto.EstacionamentoRequestDTO;
 import br.com.fiap.dto.ReciboDTO;
-import br.com.fiap.dto.VeiculoDTO;
-import br.com.fiap.dto.VeiuculoRequestDTO;
-import br.com.fiap.model.VeiculoModel;
 import br.com.fiap.service.EstacionamentoService;
-import br.com.fiap.service.VeiculoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,9 +11,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/estacionamento")
@@ -37,7 +33,7 @@ public class EstacionamentoController {
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content)
             })
-    public ResponseEntity<ReciboDTO> create(@RequestBody @Valid EstacionamentoRequestDTO dto){
+    public ResponseEntity<ReciboDTO> create(@RequestBody @Valid EstacionamentoRequestDTO dto) {
         ReciboDTO recibo = service.registrar(dto);
         return recibo != null ? ResponseEntity.ok(recibo) : ResponseEntity.ok().build();
     }

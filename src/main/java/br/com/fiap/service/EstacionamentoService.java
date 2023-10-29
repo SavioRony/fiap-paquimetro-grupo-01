@@ -1,14 +1,14 @@
 package br.com.fiap.service;
 
-import br.com.fiap.enums.TipoEstacionamento;
 import br.com.fiap.dto.EstacionamentoRequestDTO;
 import br.com.fiap.dto.ReciboDTO;
+import br.com.fiap.enums.TipoEstacionamento;
+import br.com.fiap.exception.BadRequestException;
 import br.com.fiap.mapper.EstacionamentoMapper;
 import br.com.fiap.model.CondutorModel;
 import br.com.fiap.model.EstacionamentoModel;
 import br.com.fiap.repository.CondutorRepository;
 import br.com.fiap.repository.EstacionamentoRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +32,15 @@ public class EstacionamentoService {
 
     public ReciboDTO registrar(EstacionamentoRequestDTO dto) {
         List<EstacionamentoModel> estacionamentos = repository.findEstacionamentosAtivosOrSemDataFimPorVeiculo(LocalDateTime.now(), dto.getVeiculo().getPlaca());
-        if(!estacionamentos.isEmpty()){
-            throw new RuntimeException("Ja possui um registro ativo para esse veiculo!");
+        if (!estacionamentos.isEmpty()) {
+            throw new BadRequestException("Ja possui um registro ativo para esse veiculo!");
         }
         EstacionamentoModel request = mapper.toModel(dto);
         request.setDataHoraInicio(LocalDateTime.now());
         if (TipoEstacionamento.FIXO.equals(dto.getTipo())) {
+            if (request.getQuantidadeHoras() == null || request.getQuantidadeHoras() == 0) {
+                throw new BadRequestException("Para estacionamento fixo a quantidade de horas não pode ser nula ou menor que 1");
+            }
             request.setDataHoraFim(request.getDataHoraInicio().plusHours(request.getQuantidadeHoras()));
         }
         EstacionamentoModel estacionamento = repository.save(request);
