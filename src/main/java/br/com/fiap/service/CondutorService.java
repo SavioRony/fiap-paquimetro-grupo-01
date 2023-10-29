@@ -18,13 +18,9 @@ public class CondutorService {
     @Autowired
     private CondutorRepository repository;
 
-    public Boolean saveCondutor(CondutorRequestDTO requestDTO) {
+    public CondutorResponseDTO saveCondutor(CondutorRequestDTO requestDTO) {
         CondutorModel condutorModel = mapper.toModel(requestDTO);
-        if (condutorModel != null) {
-            repository.save(condutorModel);
-            return true;
-        }
-        return false;
+        return mapper.toResponseDto(repository.save(condutorModel));
     }
 
     public CondutorResponseDTO findCondutor(String numeroDoc) {
