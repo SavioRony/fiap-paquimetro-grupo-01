@@ -10,5 +10,6 @@ public class VeiculoDTO {
     @NotNull(message = "é necessario passar o numero da placa")
     private String placa;
     private String modelo;
+    private CondutorIdDTO condutor;
     private String cor;
 }

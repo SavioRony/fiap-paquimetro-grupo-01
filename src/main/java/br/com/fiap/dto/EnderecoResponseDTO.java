@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EnderecoResponseDTO {
 
+    private Long id;
     private String cep;
     private String logradouro;
     private String numero;

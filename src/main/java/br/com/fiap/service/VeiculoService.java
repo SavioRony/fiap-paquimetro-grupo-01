@@ -2,6 +2,7 @@ package br.com.fiap.service;
 
 import br.com.fiap.dto.VeiculoDTO;
 import br.com.fiap.dto.VeiuculoRequestDTO;
+import br.com.fiap.exception.BadRequestException;
 import br.com.fiap.exception.NotFoundException;
 import br.com.fiap.mapper.VeiculoMapper;
 import br.com.fiap.repository.VeiculoRepository;
@@ -18,26 +19,34 @@ public class VeiculoService {
     protected VeiculoRepository repository;
 
     @Autowired
+    private CondutorService condutorService;
+
+    @Autowired
     protected VeiculoMapper mapper;
 
     public VeiculoDTO create(VeiuculoRequestDTO dto){
+        condutorService.findCondutor(dto.getCondutor().getDocumento());
+        if(repository.findById(dto.getPlaca()).isPresent()){
+            throw new BadRequestException("Veiculo ja cadastrado!");
+        }
         return mapper.toDTO(repository.save(mapper.toModel(dto)));
     }
 
-    public VeiculoDTO update(VeiuculoRequestDTO dto, String placa){
-        var model = repository.findById(placa);
-        return model.isPresent() ? mapper.toDTO(repository.save(mapper.toModel(dto))) : null;
+    public VeiculoDTO update(VeiuculoRequestDTO dto){
+        condutorService.findCondutor(dto.getCondutor().getDocumento());
+        this.getById(dto.getPlaca());
+        return mapper.toDTO(repository.save(mapper.toModel(dto)));
     }
 
     public VeiculoDTO getById(String placa){
         var model = repository.findById(placa);
-        return model.map(veiculoModel -> mapper.toDTO(veiculoModel)).orElseThrow(() -> new NotFoundException("Veiculo não cadastrado no sistema!"));
+        return model.map(veiculoModel -> mapper.toDTO(veiculoModel)).orElseThrow(() -> new NotFoundException("Veiculo não esta cadastrado no sistema!"));
     }
 
-    public List<VeiculoDTO> getAllVeiculos(){
-
+    public List<VeiculoDTO> getAllVeiculos(String documento){
+        condutorService.findCondutor(documento);
         List<VeiculoDTO> allVeiculos = new ArrayList<>();
-        var allVeiculosAtBd = repository.findAll();
+        var allVeiculosAtBd = repository.findVeiculosPorCondutor(documento);
         if(!allVeiculosAtBd.isEmpty()){
             allVeiculosAtBd.forEach(x-> allVeiculos.add(mapper.toDTO(x)));
             return allVeiculos;

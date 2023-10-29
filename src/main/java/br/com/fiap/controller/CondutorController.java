@@ -5,7 +5,6 @@ import br.com.fiap.dto.CondutorResponseDTO;
 import br.com.fiap.model.CondutorModel;
 import br.com.fiap.service.CondutorService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -41,21 +40,16 @@ public class CondutorController {
         return response ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/{numeroDoc}")
-    @Operation(summary = "Listar condutor", description = "Listar condutor",
+    @GetMapping("/{documento}")
+    @Operation(summary = "Buscar condutor", description = "Buscar condutor por documento",
             tags = {"Condutor"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = {@Content(
-                                    mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = CondutorModel.class))
-                            )}),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content)
+                            content = @Content(schema = @Schema(implementation = CondutorResponseDTO.class))),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content)
             })
-    public ResponseEntity<CondutorResponseDTO> getCondutor(@PathVariable String numeroDoc) {
-
-        CondutorResponseDTO response = service.findCondutor(numeroDoc);
-        return response != null ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
+    public ResponseEntity<CondutorResponseDTO> getCondutor(@PathVariable String documento) {
+        return ResponseEntity.ok(service.findCondutor(documento));
     }
 
     @PutMapping()
@@ -63,13 +57,12 @@ public class CondutorController {
             tags = {"Condutor"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = CondutorModel.class))
+                            content = @Content(schema = @Schema(implementation = CondutorResponseDTO.class))
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content)
             })
-    public ResponseEntity<Boolean> updateCondutor(@RequestBody @Valid CondutorRequestDTO requestDTO) {
-
-        Boolean response = service.updateCondutor(requestDTO);
-        return response ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
+    public ResponseEntity<CondutorResponseDTO> updateCondutor(@RequestBody @Valid CondutorRequestDTO requestDTO) {
+        CondutorResponseDTO response = service.updateCondutor(requestDTO);
+        return ResponseEntity.ok(response);
     }
 }

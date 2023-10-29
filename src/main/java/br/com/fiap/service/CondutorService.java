@@ -29,17 +29,13 @@ public class CondutorService {
 
     public CondutorResponseDTO findCondutor(String numeroDoc) {
         var model = repository.findById(numeroDoc);
-        return model.map(condutorModel -> mapper.toResponseDto(condutorModel)).orElseThrow(() -> new NotFoundException("Conduto não cadastrado no sistema!"));
+        return model.map(condutorModel -> mapper.toResponseDto(condutorModel)).orElseThrow(() -> new NotFoundException("Condutor não cadastrado no sistema!"));
     }
 
-    public Boolean updateCondutor(CondutorRequestDTO requestDTO) {
-        if (repository.existsById(requestDTO.getDocumento())) {
-            CondutorModel condutorModel = mapper.toModel(requestDTO);
-            if (condutorModel != null) {
-                repository.save(condutorModel);
-                return true;
-            }
-        }
-        return false;
+    public CondutorResponseDTO updateCondutor(CondutorRequestDTO requestDTO) {
+        CondutorResponseDTO condutor = this.findCondutor(requestDTO.getDocumento());
+        CondutorModel model = mapper.toModel(requestDTO);
+        model.getEndereco().setId(condutor.getEndereco().getId());
+        return mapper.toResponseDto(repository.save(model));
     }
 }
