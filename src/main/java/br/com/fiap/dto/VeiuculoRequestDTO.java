@@ -11,7 +11,7 @@ public class VeiuculoRequestDTO {
     @NotNull(message = "é necessario passar o numero da placa")
     private String placa;
     @NotNull(message = "condutor não pode ser nulo")
-    private CondutorRequestDTO condutor;
+    private CondutorIdDTO condutor;
     private String modelo;
     private String cor;
 }

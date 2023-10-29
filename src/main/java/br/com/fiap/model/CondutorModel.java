@@ -1,11 +1,7 @@
 package br.com.fiap.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import br.com.fiap.enums.TipoPagamento;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,7 +24,8 @@ public class CondutorModel {
 	private String nome;
 	private String telefone;
 	private String email;
-	private String tipoDePagamento;
+	@Enumerated(EnumType.STRING)
+	private TipoPagamento tipoDePagamento;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
 	private EnderecoModel endereco;
