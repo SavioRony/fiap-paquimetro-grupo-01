@@ -1,8 +1,8 @@
 package br.com.fiap.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 
 @Data
 public class VeiculoDTO {

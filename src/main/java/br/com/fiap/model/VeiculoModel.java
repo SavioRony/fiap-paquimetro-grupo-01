@@ -1,13 +1,15 @@
 package br.com.fiap.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Data
 @EqualsAndHashCode
+@Entity
+@Table(name = "tb_veiculo")
 public class VeiculoModel {
 
     @Id

@@ -10,12 +10,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/condutor")
@@ -37,7 +38,7 @@ public class CondutorController {
     public ResponseEntity<Boolean> saveCondutor(@RequestBody @Valid CondutorRequestDTO requestDTO) {
 
         Boolean response = service.saveCondutor(requestDTO);
-        return response ? ResponseEntity.ok(response) : ResponseEntity.badRequest().build();
+        return response ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/{numeroDoc}")
@@ -51,7 +52,7 @@ public class CondutorController {
                             )}),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content)
             })
-    public ResponseEntity<CondutorResponseDTO> getCondutor(@PathVariable Long numeroDoc) {
+    public ResponseEntity<CondutorResponseDTO> getCondutor(@PathVariable String numeroDoc) {
 
         CondutorResponseDTO response = service.findCondutor(numeroDoc);
         return response != null ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
@@ -69,6 +70,6 @@ public class CondutorController {
     public ResponseEntity<Boolean> updateCondutor(@RequestBody @Valid CondutorRequestDTO requestDTO) {
 
         Boolean response = service.updateCondutor(requestDTO);
-        return response ? ResponseEntity.ok(response) : ResponseEntity.badRequest().build();
+        return response ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 }

@@ -1,18 +1,18 @@
 package br.com.fiap.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
 
 @Getter
 @Setter
@@ -24,12 +24,12 @@ import javax.persistence.Table;
 public class CondutorModel {
 
 	@Id
-    private Long documento;
+    private String documento;
 	private String nome;
 	private String telefone;
 	private String email;
 	private String tipoDePagamento;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
 	private EnderecoModel endereco;
 }

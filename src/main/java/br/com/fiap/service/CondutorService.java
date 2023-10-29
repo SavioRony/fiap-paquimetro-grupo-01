@@ -26,7 +26,7 @@ public class CondutorService {
         return false;
     }
 
-    public CondutorResponseDTO findCondutor(Long numeroDoc) {
+    public CondutorResponseDTO findCondutor(String numeroDoc) {
         CondutorModel condutorModel = repository.getReferenceById(numeroDoc);
         return mapper.toResponseDto(condutorModel);
     }

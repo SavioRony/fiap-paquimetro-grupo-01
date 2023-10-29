@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CondutorRequestDTO {
 
-    private Long documento;
+    private String documento;
     private String nome;
     private String telefone;
     private String email;

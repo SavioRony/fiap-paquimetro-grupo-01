@@ -1,9 +1,7 @@
 package br.com.fiap.controller;
 
-import br.com.fiap.dto.CondutorResponseDTO;
 import br.com.fiap.dto.VeiculoDTO;
 import br.com.fiap.dto.VeiuculoRequestDTO;
-import br.com.fiap.model.CondutorModel;
 import br.com.fiap.model.VeiculoModel;
 import br.com.fiap.service.VeiculoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,11 +10,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
