@@ -1,9 +1,7 @@
 package br.com.fiap.controller;
 
-import br.com.fiap.dto.EstacionamentoRequestDTO;
-import br.com.fiap.dto.EstacionamentoResponseDTO;
-import br.com.fiap.dto.ReciboDTO;
-import br.com.fiap.dto.VeiculoIdDTO;
+import br.com.fiap.dto.*;
+import br.com.fiap.service.AlertaService;
 import br.com.fiap.service.EstacionamentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -25,6 +23,9 @@ public class EstacionamentoController {
 
     @Autowired
     protected EstacionamentoService service;
+
+    @Autowired
+    protected AlertaService alertaService;
 
     @PostMapping("/registro")
     @Operation(summary = "Registro", description = "Registro de estacionamento",
@@ -82,4 +83,21 @@ public class EstacionamentoController {
         return ResponseEntity.ok(service.buscarEstacionamentosPorDocumento(documento));
     }
 
+    @GetMapping("/alerta/{placa}")
+    @Operation(summary = "Buscar estacionamentos", description = "Buscar estacionamentos por condutor",
+            tags = {"Alerta"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = {@Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = AlertaDTO.class)))}
+                    ),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content)
+            })
+    public ResponseEntity<AlertaDTO> findAlert(@PathVariable(name = "placa") String placa){
+
+        var alerta = alertaService.findAlerta(placa);
+
+        return ResponseEntity.ok(alerta);
+    }
 }

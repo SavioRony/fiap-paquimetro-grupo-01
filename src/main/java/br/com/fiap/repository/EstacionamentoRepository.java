@@ -19,6 +19,11 @@ public interface EstacionamentoRepository extends JpaRepository<EstacionamentoMo
             , nativeQuery = true)
     Optional<EstacionamentoModel> findEstacionamentoAbertoPorVeiculo(String placa);
 
+
+    @Query(value = "SELECT * FROM tb_estacionamento e WHERE e.placa = :placa"
+            , nativeQuery = true)
+    Optional<EstacionamentoModel> findEstacionamentoAberto(String placa);
+
     @Query(value = "SELECT * FROM tb_estacionamento e WHERE e.documento = :documento"
             , nativeQuery = true)
     List<EstacionamentoModel> findEstacionamentosPorCondutor(String documento);
