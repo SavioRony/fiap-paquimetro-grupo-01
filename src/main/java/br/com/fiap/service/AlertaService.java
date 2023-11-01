@@ -2,7 +2,6 @@ package br.com.fiap.service;
 
 import br.com.fiap.dto.AlertaDTO;
 import br.com.fiap.enums.TipoEstacionamento;
-import br.com.fiap.exception.NotFoundException;
 import br.com.fiap.repository.EstacionamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ public class AlertaService {
 
     public AlertaDTO findAlerta(String placa){
 
-        var estacionamentoEmAberto = repository.findEstacionamentoAberto(placa);
+        var estacionamentoEmAberto = repository.findEstacionamentoAbertoPorVeiculo(placa);
 
         if(estacionamentoEmAberto.isPresent()){
 
@@ -33,13 +32,16 @@ public class AlertaService {
             if(estacionamento.getTipo() == TipoEstacionamento.ABERTO){
                 long horas = Duration.between(estacionamento.getDataHoraInicio(), actualDate).toSeconds();
 
+
                 hora = horas/3600;
                 horas %= 3600;
                 minuto = horas/60;
 
                 alerta.setPlaca(placa);
                 alerta.setAlerta("Ja se passou " + hora + " hora(s) " + minuto + " minuto(s)");
+
                 return alerta;
+
             }else {
 
                 long horaFixa = Duration.between(estacionamento.getDataHoraInicio(), actualDate).toSeconds();
@@ -49,17 +51,18 @@ public class AlertaService {
                 minuto = horaFixa/60;
                 alerta.setPlaca(placa);
 
-                if(hora > estacionamento.getQuantidadeHoras() || (hora == estacionamento.getQuantidadeHoras() && minuto > 0)){
-                    alerta.setAlerta("Você ultrapassou as horas fixas !, sera cobrado + 1h");
-                }else if(estacionamento.getQuantidadeHoras() == hora && minuto == 0){
-                    alerta.setAlerta("Acabou sua(s) hora(s)");
-                } else if (hora < estacionamento.getQuantidadeHoras()) {
+                if (hora < estacionamento.getQuantidadeHoras()) {
                     alerta.setAlerta("Ja se passou " + hora + " hora(s) " + minuto + " minuto(s)");
+                }else {
+                    alerta.setAlerta("Tempo Esgotado !");
                 }
 
                 return alerta;
             }
         }
-        throw new NotFoundException("Não possui nenhum estacionamento aberto para esse veiculo!");
+        var alertaEstacioanmentoFechado = new AlertaDTO();
+        alertaEstacioanmentoFechado.setPlaca(placa);
+        alertaEstacioanmentoFechado.setAlerta("Não existe nenhum estacionamento aberto para este veiculo !");
+        return alertaEstacioanmentoFechado;
     }
 }
