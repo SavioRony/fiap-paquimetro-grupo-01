@@ -26,43 +26,20 @@ public class AlertaService {
 
             var actualDate = LocalDateTime.now();
 
-            long hora;
-            long minuto;
+            long horas = Duration.between(estacionamento.getDataHoraInicio(), actualDate).toSeconds();
 
-            if(estacionamento.getTipo() == TipoEstacionamento.ABERTO){
-                long horas = Duration.between(estacionamento.getDataHoraInicio(), actualDate).toSeconds();
+            var hora = horas/3600;
+            horas %= 3600;
+            var minuto = horas/60;
 
+            alerta.setPlaca(placa);
+            alerta.setAlerta("Ja se passou " + hora + " hora(s) " + minuto + " minuto(s)");
 
-                hora = horas/3600;
-                horas %= 3600;
-                minuto = horas/60;
-
-                alerta.setPlaca(placa);
-                alerta.setAlerta("Ja se passou " + hora + " hora(s) " + minuto + " minuto(s)");
-
-                return alerta;
-
-            }else {
-
-                long horaFixa = Duration.between(estacionamento.getDataHoraInicio(), actualDate).toSeconds();
-
-                hora = horaFixa/3600;
-                horaFixa %= 3600;
-                minuto = horaFixa/60;
-                alerta.setPlaca(placa);
-
-                if (hora < estacionamento.getQuantidadeHoras()) {
-                    alerta.setAlerta("Ja se passou " + hora + " hora(s) " + minuto + " minuto(s)");
-                }else {
-                    alerta.setAlerta("Tempo Esgotado !");
-                }
-
-                return alerta;
-            }
+            return alerta;
         }
-        var alertaEstacioanmentoFechado = new AlertaDTO();
-        alertaEstacioanmentoFechado.setPlaca(placa);
-        alertaEstacioanmentoFechado.setAlerta("Não existe nenhum estacionamento aberto para este veiculo !");
-        return alertaEstacioanmentoFechado;
+        var alertaEstacionamentoFechado = new AlertaDTO();
+        alertaEstacionamentoFechado.setPlaca(placa);
+        alertaEstacionamentoFechado.setAlerta("Não existe nenhum estacionamento aberto para este veiculo !");
+        return alertaEstacionamentoFechado;
     }
 }
