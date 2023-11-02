@@ -504,7 +504,50 @@ O objetivo principal é refazer uma solução de parquímetros, que atualmente a
 | 400    | Bad Request |
 | 404    | Not Found   |
 
-# 📗 Acessando o Swagger da Aplicação
+# Deploy com CDK na AWS
+
+- Projeto CDK usado para deploy: ``https://github.com/SavioRony/aws-deploy-paquimetro``
+- Link do swagger da aplicação na aws: `` ``
+
+## Arquitetura do projeto na AWS
+
+![Infraestura da aplicação na aws](.\src\main\resources\img\Infra ECS.drawio.png)
+
+
+## Recursos AWS Utilizados no Deploy
+Aqui estão os recursos AWS usados no deploy com CDK:
+
+### 1. VPC (Virtual Private Cloud)
+A VPC (Virtual Private Cloud) é uma rede virtual privada que permite isolar e personalizar a infraestrutura de rede. Com ela, é possível configurar sub-redes, tabelas de roteamento e grupos de segurança para criar um ambiente seguro e isolado.
+
+### 2. ECR (Elastic Container Registry)
+O ECR (Elastic Container Registry) é um repositório gerenciado de imagens Docker. É o local onde as imagens Docker do projeto Spring são armazenadas e disponibilizadas para a criação de contêineres em clusters ECS (Elastic Container Service).
+
+### 3. Cluster ECS (Elastic Container Service)
+Um cluster ECS (Elastic Container Service) é uma plataforma gerenciada que permite a execução de contêineres Docker, incluindo a aplicação Spring. Ele oferece escalabilidade e alta disponibilidade para os contêineres e é o ambiente no qual os contêineres são implantados e gerenciados.
+
+### 4. Task Definition
+A definição de tarefa descreve como a aplicação é executada em contêineres, especificando a imagem Docker a ser usada, os recursos necessários (CPU, memória) e configurações como variáveis de ambiente.
+
+### 5. Service
+O serviço do ECS gerencia a execução das tarefas, garantindo que o número desejado de instâncias esteja em execução e controlando o processo de implantação de novas versões da definição da tarefa. Isso permite atualizar a aplicação de forma controlada e sem tempo de inatividade.
+
+### 6. Auto Scaling
+O Auto Scaling permite que o serviço ECS aumente ou diminua o número de instâncias de contêineres com base em métricas específicas, como consumo de CPU, RAM e quantidade de requisições. Ele monitora essas métricas e, com base em políticas de escalabilidade configuradas, ajusta automaticamente o número de instâncias para otimizar o uso de recursos e garantir que a aplicação funcione de forma eficiente, mesmo sob carga variável.
+
+### 7. ALB (Application Load Balancer)
+Um Application Load Balancer (ALB) é usado para centralizar e distribuir as requisições dos clientes entre as instâncias do projeto Spring em execução no cluster ECS. Isso equilibra a carga de trabalho, melhora a escalabilidade e garante que todas as instâncias recebam tráfego de forma equitativa.
+
+### 8. Target Group
+O Target Group é associado ao ALB e permite monitorar a saúde das instâncias por meio de verificações de integridade (Health Check). Se uma instância for considerada não saudável, o serviço a substituirá automaticamente, garantindo alta disponibilidade e confiabilidade da aplicação.
+
+### 9. Security Group
+Os grupos de segurança são usados para aplicar regras de segurança às instâncias e recursos da AWS, controlando quais portas e protocolos têm acesso.
+
+### 10. RDS (Relational Database Service)
+O RDS (Relational Database Service) é um serviço gerenciado de banco de dados relacional que hospeda o banco de dados MySQL da aplicação.
+
+# 📗 Acessando o Swagger da Aplicação local
 A documentação da API da nossa aplicação está disponível através do Swagger,
 uma interface interativa que permite explorar e testar os endpoints da API.
 Siga os passos abaixo para acessar o Swagger:
@@ -523,7 +566,7 @@ http://localhost:8080/fiap-paquimetro-grupo01/swagger-ui/index.html#/
 
 Agora você está na interface do Swagger, onde pode ver a lista de todos os endpoints disponíveis, seus detalhes e parâmetros. Explore e teste os endpoints interativamente.
 
-# 🐋 Como iniciar o MySql e PhpMyAdmin com Docker
+# 🐋 Como iniciar o MySql e PhpMyAdmin com Docker local
 1 - Antes de qualquer coisa certifique-se de ter o Docker já instalado e configurado em sua maquina:
 - https://docs.docker.com/get-docker/
 
@@ -556,5 +599,5 @@ http://localhost:8000/
 - ``Docker``
 - ``MySql``
 - ``Swagger``
-
+- ``AWS``
 
