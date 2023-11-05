@@ -2,7 +2,6 @@ package br.com.fiap.controller;
 
 import br.com.fiap.dto.CondutorRequestDTO;
 import br.com.fiap.dto.CondutorResponseDTO;
-import br.com.fiap.model.CondutorModel;
 import br.com.fiap.service.CondutorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,14 +29,13 @@ public class CondutorController {
             tags = {"Condutor"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = CondutorModel.class))
+                            content = @Content(schema = @Schema(implementation = CondutorResponseDTO.class))
                     ),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content)
             })
-    public ResponseEntity<Boolean> saveCondutor(@RequestBody @Valid CondutorRequestDTO requestDTO) {
-
-        Boolean response = service.saveCondutor(requestDTO);
-        return response ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.badRequest().build();
+    public ResponseEntity<CondutorResponseDTO> saveCondutor(@RequestBody @Valid CondutorRequestDTO requestDTO) {
+        CondutorResponseDTO response = service.saveCondutor(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{documento}")
