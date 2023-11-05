@@ -37,8 +37,9 @@ public class EstacionamentoService {
 
 
     public ReciboDTO registrar(EstacionamentoRequestDTO dto) {
-        List<EstacionamentoModel> estacionamentos = repository.findEstacionamentosAtivosOrSemDataFimPorVeiculo(LocalDateTime.now(), dto.getVeiculo().getPlaca());
-        if (!estacionamentos.isEmpty()) {
+        var estacionamentos = repository.findEstacionamentosAtivosOrSemDataFimPorVeiculo(LocalDateTime.now(), dto.getVeiculo().getPlaca());
+        veiculoService.findVeiculoPorCondutoEPlaca(dto.getCondutor().getDocumento(), dto.getVeiculo().getPlaca());
+        if (estacionamentos.isPresent()) {
             throw new BadRequestException("Ja possui um registro ativo para esse veiculo!");
         }
         EstacionamentoModel request = mapper.toModel(dto);

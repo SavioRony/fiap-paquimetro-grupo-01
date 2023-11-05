@@ -1,7 +1,6 @@
 package br.com.fiap.service;
 
 import br.com.fiap.dto.AlertaDTO;
-import br.com.fiap.enums.TipoEstacionamento;
 import br.com.fiap.repository.EstacionamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class AlertaService {
 
     public AlertaDTO findAlerta(String placa){
 
-        var estacionamentoEmAberto = repository.findEstacionamentoAbertoPorVeiculo(placa);
+        var estacionamentoEmAberto = repository.findEstacionamentosAtivosOrSemDataFimPorVeiculo(LocalDateTime.now(), placa);
 
         if(estacionamentoEmAberto.isPresent()){
 

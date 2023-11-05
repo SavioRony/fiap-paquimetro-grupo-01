@@ -504,6 +504,35 @@ O objetivo principal é refazer uma solução de parquímetros, que atualmente a
 | 400    | Bad Request |
 | 404    | Not Found   |
 
+### **Alerta de estacionamento por veiculo**
+
+**Requisição**
+
+**`GET /estacionamento/alerta/{placa}`**
+
+**Parâmetros da requisição**
+
+| Parâmetro | Tipo    |
+|-----------|---------|
+| placa     | String  |
+
+
+**Response**
+
+```
+{
+  "placa": "abc123",
+  "alerta": "Não existe nenhum estacionamento aberto para este veiculo !"
+}
+```
+
+**Códigos de resposta**
+
+| Código | Descrição   |
+|--------|-------------|
+| 200    | OK          |
+| 404    | Not Found   |
+
 # Deploy com CDK na AWS
 
 - Projeto CDK usado para deploy: ``https://github.com/SavioRony/aws-deploy-paquimetro``

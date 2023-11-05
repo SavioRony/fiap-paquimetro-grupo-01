@@ -84,7 +84,7 @@ public class EstacionamentoController {
     }
 
     @GetMapping("/alerta/{placa}")
-    @Operation(summary = "Buscar estacionamentos", description = "Buscar estacionamentos por condutor",
+    @Operation(summary = "Alerta de tempo de estacionamento", description = "Alerta de tempo de estacionamento",
             tags = {"Alerta"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
