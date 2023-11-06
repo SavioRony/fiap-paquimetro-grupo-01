@@ -535,8 +535,14 @@ O objetivo principal é refazer uma solução de parquímetros, que atualmente a
 
 # Deploy com CDK na AWS
 
-- Projeto CDK usado para deploy: ``https://github.com/SavioRony/aws-deploy-paquimetro``
-- Link do swagger da aplicação na aws: `` ``
+- Projeto CDK usado para deploy:
+```
+https://github.com/SavioRony/aws-deploy-paquimetro
+```
+- Link do swagger da aplicação na aws:
+```
+http://servic-alb01-mbxp5uvavwce-2106881131.us-east-1.elb.amazonaws.com:8080/fiap-paquimetro-grupo01/swagger-ui/index.html#/
+```
 
 ## Arquitetura do projeto na AWS
 
